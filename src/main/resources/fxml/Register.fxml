@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.hotelio.controllers.RegisterController"
+      alignment="CENTER"
+      spacing="15.0"
+      style="-fx-background-color: linear-gradient(to bottom, #2c3e50, #3498db);">
+
+    <padding>
+        <Insets top="30" right="30" bottom="30" left="30"/>
+    </padding>
+
+    <!-- Formulaire d'inscription -->
+    <VBox alignment="CENTER"
+          spacing="15.0"
+          maxWidth="450"
+          style="-fx-background-color: white; -fx-background-radius: 10;">
+
+        <padding>
+            <Insets top="30" right="30" bottom="30" left="30"/>
+        </padding>
+
+        <Label text="Créer un compte"
+               style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+
+        <TextField fx:id="nomField"
+                   promptText="Nom"/>
+
+        <TextField fx:id="prenomField"
+                   promptText="Prénom"/>
+
+        <TextField fx:id="emailField"
+                   promptText="Email"/>
+
+        <TextField fx:id="telephoneField"
+                   promptText="Téléphone"/>
+
+        <PasswordField fx:id="passwordField"
+                       promptText="Mot de passe"/>
+
+        <PasswordField fx:id="confirmPasswordField"
+                       promptText="Confirmer le mot de passe"/>
+
+        <Button fx:id="registerButton"
+                text="S'inscrire"
+                onAction="#handleRegister"
+                maxWidth="Infinity"
+                style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 12;"/>
+
+        <Button fx:id="backButton"
+                text="← Retour"
+                onAction="#handleGoToLogin"
+                style="-fx-background-color: transparent; -fx-text-fill: #3498db;"/>
+    </VBox>
+
+</VBox>

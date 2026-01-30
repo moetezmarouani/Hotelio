@@ -8,7 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-class ReservationService {
+public class ReservationService {
 
     private ChambreService chambreService = new ChambreService();
     private UserService userService = new UserService();

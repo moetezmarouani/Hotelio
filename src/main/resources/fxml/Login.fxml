@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.hotelio.controllers.LoginController"
+      alignment="CENTER"
+      spacing="20.0"
+      style="-fx-background-color: linear-gradient(to bottom, #2c3e50, #3498db);">
+
+    <padding>
+        <Insets top="40" right="40" bottom="40" left="40"/>
+    </padding>
+
+    <!-- Titre -->
+    <Label text="🏨 HotelIO"
+           style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+
+    <Label text="Système de Gestion Hôtelière"
+           style="-fx-font-size: 16px; -fx-text-fill: #ecf0f1;"/>
+
+    <!-- Formulaire de connexion -->
+    <VBox alignment="CENTER"
+          spacing="15.0"
+          maxWidth="400"
+          style="-fx-background-color: white; -fx-background-radius: 10;">
+
+        <padding>
+            <Insets top="30" right="30" bottom="30" left="30"/>
+        </padding>
+
+        <Label text="Connexion"
+               style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+
+        <TextField fx:id="emailField"
+                   promptText="Email"
+                   style="-fx-font-size: 14px; -fx-padding: 10;"/>
+
+        <PasswordField fx:id="passwordField"
+                       promptText="Mot de passe"
+                       style="-fx-font-size: 14px; -fx-padding: 10;"/>
+
+        <Button fx:id="loginButton"
+                text="Se connecter"
+                onAction="#handleLogin"
+                maxWidth="Infinity"
+                style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 12; -fx-cursor: hand;"/>
+
+        <Button fx:id="registerButton"
+                text="Créer un compte"
+                onAction="#handleGoToRegister"
+                style="-fx-background-color: transparent; -fx-text-fill: #3498db; -fx-font-size: 12px; -fx-cursor: hand; -fx-underline: true;"/>
+    </VBox>
+
+</VBox>

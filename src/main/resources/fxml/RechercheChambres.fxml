@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.hotelio.controllers.RechercheChambresController"
+      spacing="20.0"
+      style="-fx-background-color: #f5f5f5;">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <!-- Titre -->
+    <Label text="🔍 Rechercher une Chambre"
+           style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+
+    <!-- Formulaire de recherche -->
+    <VBox spacing="15"
+          style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10;">
+
+        <Label text="Critères de recherche"
+               style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+        <GridPane hgap="15" vgap="10">
+            <!-- Dates -->
+            <Label text="Date d'arrivée:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+            <DatePicker fx:id="dateCheckinPicker"
+                        GridPane.columnIndex="1" GridPane.rowIndex="0"
+                        prefWidth="200"/>
+
+            <Label text="Date de départ:" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+            <DatePicker fx:id="dateCheckoutPicker"
+                        GridPane.columnIndex="3" GridPane.rowIndex="0"
+                        prefWidth="200"/>
+
+            <!-- Type et capacité -->
+            <Label text="Type de chambre:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+            <ComboBox fx:id="typeComboBox"
+                      GridPane.columnIndex="1" GridPane.rowIndex="1"
+                      prefWidth="200"/>
+
+            <Label text="Nombre de personnes:" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+            <Spinner fx:id="capaciteSpinner"
+                     GridPane.columnIndex="3" GridPane.rowIndex="1"
+                     prefWidth="100"
+                     editable="true"/>
+
+            <!-- Prix -->
+            <Label text="Prix max/nuit (DT):" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+            <TextField fx:id="prixMaxField"
+                       GridPane.columnIndex="1" GridPane.rowIndex="2"
+                       promptText="Ex: 200"/>
+
+            <Label text="Étage:" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+            <ComboBox fx:id="etageComboBox"
+                      GridPane.columnIndex="3" GridPane.rowIndex="2"
+                      prefWidth="100"/>
+        </GridPane>
+
+        <!-- Boutons -->
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Button fx:id="searchButton"
+                    text="🔍 Rechercher"
+                    onAction="#handleSearch"
+                    style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20;"/>
+
+            <Button fx:id="resetButton"
+                    text="🔄 Réinitialiser"
+                    onAction="#handleReset"
+                    style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20;"/>
+        </HBox>
+    </VBox>
+
+    <!-- Résultats -->
+    <VBox spacing="10" VBox.vgrow="ALWAYS">
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <Label fx:id="resultLabel"
+                   text="Chambres disponibles"
+                   style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <Label text="Trier par:"/>
+            <ComboBox fx:id="sortComboBox"
+                      onAction="#handleSort"
+                      prefWidth="150"/>
+        </HBox>
+
+        <!-- TableView des chambres -->
+        <TableView fx:id="chambresTableView"
+                   VBox.vgrow="ALWAYS"
+                   style="-fx-background-color: white;">
+
+            <columns>
+                <TableColumn fx:id="numeroColumn" text="N°" prefWidth="60">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="numero"/>
+                    </cellValueFactory>
+                </TableColumn>
+
+                <TableColumn fx:id="typeColumn" text="Type" prefWidth="100">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="type"/>
+                    </cellValueFactory>
+                </TableColumn>
+
+                <TableColumn fx:id="capaciteColumn" text="Capacité" prefWidth="80">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="capacite"/>
+                    </cellValueFactory>
+                </TableColumn>
+
+                <TableColumn fx:id="etageColumn" text="Étage" prefWidth="60">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="etage"/>
+                    </cellValueFactory>
+                </TableColumn>
+
+                <TableColumn fx:id="prixColumn" text="Prix/Nuit (DT)" prefWidth="120">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="prixParNuit"/>
+                    </cellValueFactory>
+                </TableColumn>
+
+                <TableColumn fx:id="descriptionColumn" text="Description" prefWidth="250">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="description"/>
+                    </cellValueFactory>
+                </TableColumn>
+
+                <TableColumn fx:id="actionsColumn" text="Actions" prefWidth="100"/>
+            </columns>
+
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+            </columnResizePolicy>
+        </TableView>
+    </VBox>
+
+</VBox>

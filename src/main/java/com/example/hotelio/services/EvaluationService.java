@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-class EvaluationService {
+public class EvaluationService {
 
     // Ajouter une évaluation
     public boolean ajouterEvaluation(Evaluation evaluation) {

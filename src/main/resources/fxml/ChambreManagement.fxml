@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.hotelio.controllers.ChambreManagementController"
+      spacing="15.0">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Gestion des Chambres"
+           style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+
+    <!-- TableView -->
+    <TableView fx:id="tableView"
+               VBox.vgrow="ALWAYS">
+
+        <columns>
+            <TableColumn fx:id="idColumn"
+                         text="ID"
+                         prefWidth="50">
+                <cellValueFactory>
+                    <PropertyValueFactory property="id"/>
+                </cellValueFactory>
+            </TableColumn>
+
+            <TableColumn fx:id="numeroColumn"
+                         text="Numéro"
+                         prefWidth="80">
+                <cellValueFactory>
+                    <PropertyValueFactory property="numero"/>
+                </cellValueFactory>
+            </TableColumn>
+
+            <TableColumn fx:id="typeColumn"
+                         text="Type"
+                         prefWidth="100">
+                <cellValueFactory>
+                    <PropertyValueFactory property="type"/>
+                </cellValueFactory>
+            </TableColumn>
+
+            <TableColumn fx:id="prixColumn"
+                         text="Prix/Nuit"
+                         prefWidth="100">
+                <cellValueFactory>
+                    <PropertyValueFactory property="prixParNuit"/>
+                </cellValueFactory>
+            </TableColumn>
+
+            <TableColumn fx:id="capaciteColumn"
+                         text="Capacité"
+                         prefWidth="80">
+                <cellValueFactory>
+                    <PropertyValueFactory property="capacite"/>
+                </cellValueFactory>
+            </TableColumn>
+
+            <TableColumn fx:id="statutColumn"
+                         text="Statut"
+                         prefWidth="120">
+                <cellValueFactory>
+                    <PropertyValueFactory property="statut"/>
+                </cellValueFactory>
+            </TableColumn>
+
+            <TableColumn fx:id="etageColumn"
+                         text="Étage"
+                         prefWidth="80">
+                <cellValueFactory>
+                    <PropertyValueFactory property="etage"/>
+                </cellValueFactory>
+            </TableColumn>
+
+            <TableColumn fx:id="actionsColumn"
+                         text="Actions"
+                         prefWidth="120"/>
+        </columns>
+
+        <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+        </columnResizePolicy>
+    </TableView>
+
+    <!-- Boutons -->
+    <HBox spacing="10.0">
+        <Button fx:id="addButton"
+                text="➕ Ajouter"
+                onAction="#handleAdd"
+                style="-fx-background-color: #27ae60; -fx-text-fill: white;"/>
+
+        <Button fx:id="refreshButton"
+                text="🔄 Rafraîchir"
+                onAction="#handleRefresh"/>
+    </HBox>
+
+</VBox>

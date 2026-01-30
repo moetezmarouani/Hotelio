@@ -166,4 +166,26 @@ public class ChambreService {
         chambre.setDateCreation(rs.getTimestamp("date_creation").toLocalDateTime());
         return chambre;
     }
+    // Obtenir une chambre par son ID
+    public Chambre obtenirChambreParId(int id) {
+        String sql = "SELECT * FROM chambres WHERE id = ?";
+        Chambre chambre = null;
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    chambre = mapResultSetToChambre(rs);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Erreur récupération chambre par ID: " + e.getMessage());
+        }
+
+        return chambre;
+    }
+
 }
