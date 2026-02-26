@@ -13,12 +13,7 @@ import java.io.IOException;
  */
 public class NavigationUtil {
 
-    /**
-     * Navigue vers une nouvelle vue FXML
-     * @param source Le nœud source (généralement un bouton)
-     * @param fxmlPath Le chemin du fichier FXML
-     * @param title Le titre de la fenêtre
-     */
+
     public static void navigateTo(Node source, String fxmlPath, String title) {
         try {
             FXMLLoader loader = new FXMLLoader(NavigationUtil.class.getResource(fxmlPath));

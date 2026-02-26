@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.hotelio.controllers.ReservationManagementController"
+      spacing="15.0">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+
+    <HBox spacing="20" alignment="CENTER_LEFT">
+        <Label text="📅 Gestion des Réservations"
+               style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+
+        <Region HBox.hgrow="ALWAYS"/>
+
+
+        <VBox alignment="CENTER" spacing="5"
+              style="-fx-background-color: #3498db; -fx-padding: 10; -fx-background-radius: 5;">
+            <Label fx:id="totalLabel" text="0"
+                   style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+            <Label text="Total" style="-fx-text-fill: white; -fx-font-size: 11px;"/>
+        </VBox>
+
+        <VBox alignment="CENTER" spacing="5"
+              style="-fx-background-color: #f39c12; -fx-padding: 10; -fx-background-radius: 5;">
+            <Label fx:id="enAttenteLabel" text="0"
+                   style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+            <Label text="En attente" style="-fx-text-fill: white; -fx-font-size: 11px;"/>
+        </VBox>
+
+        <VBox alignment="CENTER" spacing="5"
+              style="-fx-background-color: #27ae60; -fx-padding: 10; -fx-background-radius: 5;">
+            <Label fx:id="confirmeesLabel" text="0"
+                   style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+            <Label text="Confirmées" style="-fx-text-fill: white; -fx-font-size: 11px;"/>
+        </VBox>
+    </HBox>
+
+
+    <HBox spacing="10" style="-fx-background-color: #ecf0f1; -fx-padding: 15; -fx-background-radius: 5;">
+        <VBox spacing="5">
+            <Label text="Statut:" style="-fx-font-weight: bold;"/>
+            <ComboBox fx:id="statutComboBox"
+                      onAction="#handleFilter"
+                      prefWidth="150"/>
+        </VBox>
+
+        <VBox spacing="5">
+            <Label text="Période:" style="-fx-font-weight: bold;"/>
+            <ComboBox fx:id="periodeComboBox"
+                      onAction="#handleFilter"
+                      prefWidth="150"/>
+        </VBox>
+
+        <VBox spacing="5">
+            <Label text="Rechercher client:" style="-fx-font-weight: bold;"/>
+            <TextField fx:id="searchField"
+                       promptText="Nom, email..."
+                       onKeyReleased="#handleSearch"
+                       prefWidth="200"/>
+        </VBox>
+
+        <Region HBox.hgrow="ALWAYS"/>
+
+        <VBox spacing="5" alignment="BOTTOM_RIGHT">
+            <Button fx:id="refreshButton"
+                    text="🔄 Actualiser"
+                    onAction="#handleRefresh"
+                    style="-fx-background-color: #3498db; -fx-text-fill: white;"/>
+        </VBox>
+
+        <VBox spacing="5" alignment="BOTTOM_RIGHT">
+            <Button fx:id="exportButton"
+                    text="📊 Exporter"
+                    onAction="#handleExport"
+                    style="-fx-background-color: #27ae60; -fx-text-fill: white;"/>
+        </VBox>
+    </HBox>
+
+
+    <TableView fx:id="tableView"
+               VBox.vgrow="ALWAYS">
+
+        <columns>
+            <TableColumn fx:id="idColumn" text="Réf." prefWidth="60">
+                <cellValueFactory>
+                    <PropertyValueFactory property="id"/>
+                </cellValueFactory>
+            </TableColumn>
+
+            <TableColumn fx:id="clientColumn" text="Client" prefWidth="150"/>
+
+            <TableColumn fx:id="emailColumn" text="Email" prefWidth="180"/>
+
+            <TableColumn fx:id="chambreColumn" text="Chambre" prefWidth="100"/>
+
+            <TableColumn fx:id="checkinColumn" text="Arrivée" prefWidth="100">
+                <cellValueFactory>
+                    <PropertyValueFactory property="dateCheckin"/>
+                </cellValueFactory>
+            </TableColumn>
+
+            <TableColumn fx:id="checkoutColumn" text="Départ" prefWidth="100">
+                <cellValueFactory>
+                    <PropertyValueFactory property="dateCheckout"/>
+                </cellValueFactory>
+            </TableColumn>
+
+            <TableColumn fx:id="personnesColumn" text="Pers." prefWidth="60">
+                <cellValueFactory>
+                    <PropertyValueFactory property="nombrePersonnes"/>
+                </cellValueFactory>
+            </TableColumn>
+
+            <TableColumn fx:id="prixColumn" text="Prix Total" prefWidth="100">
+                <cellValueFactory>
+                    <PropertyValueFactory property="prixTotal"/>
+                </cellValueFactory>
+            </TableColumn>
+
+            <TableColumn fx:id="statutColumn" text="Statut" prefWidth="120">
+                <cellValueFactory>
+                    <PropertyValueFactory property="statut"/>
+                </cellValueFactory>
+            </TableColumn>
+
+            <TableColumn fx:id="actionsColumn" text="Actions" prefWidth="180"/>
+        </columns>
+
+        <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+        </columnResizePolicy>
+    </TableView>
+
+</VBox>

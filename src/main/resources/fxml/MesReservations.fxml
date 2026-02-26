@@ -15,7 +15,7 @@
         <Insets top="20" right="20" bottom="20" left="20"/>
     </padding>
 
-    <!-- Titre -->
+
     <HBox alignment="CENTER_LEFT" spacing="10">
         <Label text="📋 Mes Réservations"
                style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
@@ -27,7 +27,7 @@
                style="-fx-font-size: 14px; -fx-text-fill: #7f8c8d;"/>
     </HBox>
 
-    <!-- Filtres -->
+
     <HBox spacing="10"
           style="-fx-background-color: white; -fx-padding: 15; -fx-background-radius: 10;">
 
@@ -44,7 +44,7 @@
                 style="-fx-background-color: #3498db; -fx-text-fill: white;"/>
     </HBox>
 
-    <!-- TableView des réservations -->
+
     <TableView fx:id="reservationsTableView"
                VBox.vgrow="ALWAYS"
                style="-fx-background-color: white;">

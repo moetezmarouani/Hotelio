@@ -3,6 +3,7 @@ package com.example.hotelio.controllers;
 import com.example.hotelio.entities.*;
 import com.example.hotelio.enums.TypeChambre;
 import com.example.hotelio.services.ChambreService;
+import com.example.hotelio.services.FideliteService;
 import com.example.hotelio.services.ReservationService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -44,6 +45,7 @@ public class RechercheChambresController {
 
     private ChambreService chambreService = new ChambreService();
     private ReservationService reservationService = new ReservationService();
+    private FideliteService fideliteService = new FideliteService();
     private ObservableList<Chambre> toutesLesChambres = FXCollections.observableArrayList();
 
     @FXML
@@ -384,10 +386,25 @@ public class RechercheChambresController {
             reservation.setCommentaire(commentArea.getText());
 
             if (reservationService.creerReservation(reservation)) {
-                showAlert(Alert.AlertType.INFORMATION, "Succès",
-                        "Réservation créée avec succès!\n\n" +
-                                "Référence: #" + reservation.getId() + "\n" +
-                                "Montant total: " + String.format("%.2f DT", total));
+                // Ajouter des points de fidélité
+                int pointsGagnes = fideliteService.calculerPointsGagnes(total);
+                String ancienNiveau = fideliteService.obtenirNiveau(currentUser.getId());
+                fideliteService.ajouterPoints(currentUser.getId(), pointsGagnes);
+
+                // Vérifier s'il y a eu promotion
+                String message = "Réservation créée avec succès!\n\n" +
+                        "Référence: #" + reservation.getId() + "\n" +
+                        "Montant total: " + String.format("%.2f DT", total) + "\n\n" +
+                        "🎉 Vous avez gagné " + pointsGagnes + " points de fidélité!";
+
+                if (fideliteService.aEuPromotion(currentUser.getId(), ancienNiveau)) {
+                    String nouveauNiveau = fideliteService.obtenirNiveau(currentUser.getId());
+                    message += "\n\n🎊 FÉLICITATIONS! 🎊\n" +
+                            "Vous êtes passé au niveau " +
+                            fideliteService.getEmojiNiveau(nouveauNiveau) + " " + nouveauNiveau + "!";
+                }
+
+                showAlert(Alert.AlertType.INFORMATION, "Succès", message);
                 dialog.close();
                 handleSearch(); // Rafraîchir la liste
             } else {

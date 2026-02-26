@@ -17,7 +17,7 @@
     <Label text="Gestion des Chambres"
            style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
 
-    <!-- TableView -->
+
     <TableView fx:id="tableView"
                VBox.vgrow="ALWAYS">
 
@@ -88,7 +88,7 @@
         </columnResizePolicy>
     </TableView>
 
-    <!-- Boutons -->
+
     <HBox spacing="10.0">
         <Button fx:id="addButton"
                 text="➕ Ajouter"

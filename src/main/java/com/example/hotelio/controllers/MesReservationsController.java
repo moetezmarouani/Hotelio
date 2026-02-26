@@ -4,9 +4,12 @@ import com.example.hotelio.entities.*;
 import com.example.hotelio.enums.StatutReservation;
 import com.example.hotelio.services.ChambreService;
 import com.example.hotelio.services.EvaluationService;
+import com.example.hotelio.services.PdfService;
 import com.example.hotelio.services.ReservationService;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -39,6 +42,7 @@ public class MesReservationsController {
     private ReservationService reservationService = new ReservationService();
     private ChambreService chambreService = new ChambreService();
     private EvaluationService evaluationService = new EvaluationService();
+    private PdfService pdfService = new PdfService();
     private List<Reservation> toutesLesReservations;
 
     @FXML
@@ -116,20 +120,25 @@ public class MesReservationsController {
 
         // Colonne actions
         actionsColumn.setCellFactory(col -> new TableCell<>() {
+
             private final Button detailsBtn = new Button("👁️");
             private final Button annulerBtn = new Button("❌");
             private final Button evaluerBtn = new Button("⭐");
-            private final HBox box = new HBox(5, detailsBtn, annulerBtn, evaluerBtn);
-
+            private final Button pdfBtn = new Button("📄");
+            private final Button payerBtn = new Button("💳");
+            private final HBox box = new HBox(5, detailsBtn, annulerBtn, evaluerBtn, pdfBtn, payerBtn);
             {
-                detailsBtn.setStyle("-fx-background-color: #3498db; -fx-text-fill: white; -fx-cursor: hand;");
+                detailsBtn.setStyle("-fx-background-color: #3498db; -fx-text-fill: white;");
                 detailsBtn.setTooltip(new Tooltip("Voir les détails"));
 
-                annulerBtn.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-cursor: hand;");
+                annulerBtn.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white;");
                 annulerBtn.setTooltip(new Tooltip("Annuler la réservation"));
 
-                evaluerBtn.setStyle("-fx-background-color: #f39c12; -fx-text-fill: white; -fx-cursor: hand;");
+                evaluerBtn.setStyle("-fx-background-color: #f39c12; -fx-text-fill: white;");
                 evaluerBtn.setTooltip(new Tooltip("Évaluer la chambre"));
+
+                pdfBtn.setStyle("-fx-background-color: #8e44ad; -fx-text-fill: white;");
+                pdfBtn.setTooltip(new Tooltip("Exporter en PDF"));
 
                 detailsBtn.setOnAction(e -> {
                     Reservation reservation = getTableView().getItems().get(getIndex());
@@ -145,26 +154,43 @@ public class MesReservationsController {
                     Reservation reservation = getTableView().getItems().get(getIndex());
                     showEvaluationDialog(reservation);
                 });
+
+                pdfBtn.setOnAction(e -> {
+                    Reservation reservation = getTableView().getItems().get(getIndex());
+                    handleExportPdf(reservation);
+                });
+                payerBtn.setStyle("-fx-background-color: #27ae60; -fx-text-fill: white;");
+                payerBtn.setTooltip(new Tooltip("Payer la réservation"));
+
+                payerBtn.setOnAction(e -> {
+                    Reservation reservation = getTableView().getItems().get(getIndex());
+                    ouvrirPaiement(reservation);
+                });
             }
 
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
+
                 if (empty) {
                     setGraphic(null);
                 } else {
                     Reservation reservation = getTableView().getItems().get(getIndex());
 
-                    // Montrer annuler seulement pour EN_ATTENTE et CONFIRMEE
                     boolean peutAnnuler = reservation.getStatut() == StatutReservation.EN_ATTENTE ||
                             reservation.getStatut() == StatutReservation.CONFIRMEE;
+
                     annulerBtn.setVisible(peutAnnuler);
                     annulerBtn.setManaged(peutAnnuler);
 
-                    // Montrer évaluer seulement pour TERMINEE
                     boolean peutEvaluer = reservation.getStatut() == StatutReservation.TERMINEE;
+
                     evaluerBtn.setVisible(peutEvaluer);
                     evaluerBtn.setManaged(peutEvaluer);
+
+                    // Le PDF est toujours visible
+                    pdfBtn.setVisible(true);
+                    pdfBtn.setManaged(true);
 
                     setGraphic(box);
                 }
@@ -178,7 +204,39 @@ public class MesReservationsController {
         reservationsTableView.getItems().setAll(toutesLesReservations);
         updateStats();
     }
+    private void ouvrirPaiement(Reservation reservation) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/fxml/Paiement.fxml")
+            );
 
+            Parent root = loader.load();
+
+            // Récupérer controller
+            PaiementController controller = loader.getController();
+
+            // Injecter données
+            controller.setPaiementData(
+                    reservation.getId(),
+                    reservation.getPrixTotal()
+            );
+
+            Stage stage = new Stage();
+            stage.setTitle("Paiement réservation #" + reservation.getId());
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+
+            // Après paiement → refresh
+            handleRefresh();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR,
+                    "Erreur",
+                    "Impossible d'ouvrir la fenêtre de paiement.");
+        }
+    }
     @FXML
     private void handleFilter() {
         String statutFiltre = statutFilterComboBox.getValue();
@@ -400,6 +458,32 @@ public class MesReservationsController {
 
     private void updateStats() {
         statsLabel.setText(toutesLesReservations.size() + " réservation(s)");
+    }
+
+    private void handleExportPdf(Reservation reservation) {
+        javafx.stage.FileChooser fileChooser = new javafx.stage.FileChooser();
+        fileChooser.setTitle("Enregistrer le PDF");
+        fileChooser.getExtensionFilters().add(
+                new javafx.stage.FileChooser.ExtensionFilter("PDF Files", "*.pdf")
+        );
+
+        String fileName = "Reservation_" + reservation.getId() + "_" +
+                LocalDate.now().toString() + ".pdf";
+        fileChooser.setInitialFileName(fileName);
+
+        java.io.File file = fileChooser.showSaveDialog(reservationsTableView.getScene().getWindow());
+        if (file != null) {
+            User user = SessionManager.getCurrentUser();
+            Chambre chambre = chambreService.obtenirChambreParId(reservation.getChambreId());
+
+            if (pdfService.genererFacture(reservation, user, chambre, file.getAbsolutePath())) {
+                showAlert(Alert.AlertType.INFORMATION, "Succès",
+                        "Facture PDF générée avec succès !\n" + file.getAbsolutePath());
+            } else {
+                showAlert(Alert.AlertType.ERROR, "Erreur",
+                        "Impossible de générer le PDF.");
+            }
+        }
     }
 
     private void showAlert(Alert.AlertType type, String title, String message) {

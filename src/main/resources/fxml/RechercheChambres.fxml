@@ -15,11 +15,11 @@
         <Insets top="20" right="20" bottom="20" left="20"/>
     </padding>
 
-    <!-- Titre -->
+
     <Label text="🔍 Rechercher une Chambre"
            style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
 
-    <!-- Formulaire de recherche -->
+
     <VBox spacing="15"
           style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10;">
 
@@ -27,7 +27,7 @@
                style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
 
         <GridPane hgap="15" vgap="10">
-            <!-- Dates -->
+
             <Label text="Date d'arrivée:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
             <DatePicker fx:id="dateCheckinPicker"
                         GridPane.columnIndex="1" GridPane.rowIndex="0"
@@ -38,7 +38,7 @@
                         GridPane.columnIndex="3" GridPane.rowIndex="0"
                         prefWidth="200"/>
 
-            <!-- Type et capacité -->
+
             <Label text="Type de chambre:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
             <ComboBox fx:id="typeComboBox"
                       GridPane.columnIndex="1" GridPane.rowIndex="1"
@@ -50,7 +50,7 @@
                      prefWidth="100"
                      editable="true"/>
 
-            <!-- Prix -->
+
             <Label text="Prix max/nuit (DT):" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
             <TextField fx:id="prixMaxField"
                        GridPane.columnIndex="1" GridPane.rowIndex="2"
@@ -62,7 +62,7 @@
                       prefWidth="100"/>
         </GridPane>
 
-        <!-- Boutons -->
+
         <HBox spacing="10" alignment="CENTER_LEFT">
             <Button fx:id="searchButton"
                     text="🔍 Rechercher"
@@ -76,7 +76,7 @@
         </HBox>
     </VBox>
 
-    <!-- Résultats -->
+
     <VBox spacing="10" VBox.vgrow="ALWAYS">
         <HBox alignment="CENTER_LEFT" spacing="10">
             <Label fx:id="resultLabel"
@@ -91,7 +91,7 @@
                       prefWidth="150"/>
         </HBox>
 
-        <!-- TableView des chambres -->
+
         <TableView fx:id="chambresTableView"
                    VBox.vgrow="ALWAYS"
                    style="-fx-background-color: white;">

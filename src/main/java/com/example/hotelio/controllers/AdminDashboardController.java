@@ -44,11 +44,7 @@ public class AdminDashboardController {
 
     @FXML
     private void handleShowReservations() {
-        // Pour l'instant, afficher un message
-        centerPane.getChildren().clear();
-        Label label = new Label("Gestion des Réservations (À implémenter)");
-        label.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
-        centerPane.getChildren().add(label);
+        loadView("/fxml/ReservationManagement.fxml");
     }
 
     @FXML

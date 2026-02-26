@@ -15,7 +15,7 @@
         <Insets top="30" right="30" bottom="30" left="30"/>
     </padding>
 
-    <!-- Formulaire d'inscription -->
+
     <VBox alignment="CENTER"
           spacing="15.0"
           maxWidth="450"

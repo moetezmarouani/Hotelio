@@ -6,6 +6,7 @@ module com.example.hotelio {
 
     // Module MySQL
     requires java.sql;
+    requires itextpdf;
 
     // Exporter les packages pour que JavaFX puisse y accéder
     opens com.example.hotelio to javafx.fxml;

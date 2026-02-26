@@ -17,7 +17,7 @@
     <Label text="Gestion des Utilisateurs"
            style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
 
-    <!-- TableView -->
+
     <TableView fx:id="tableView"
                VBox.vgrow="ALWAYS">
 
@@ -88,7 +88,7 @@
         </columnResizePolicy>
     </TableView>
 
-    <!-- Bouton rafraîchir -->
+
     <Button fx:id="refreshButton"
             text="🔄 Rafraîchir"
             onAction="#handleRefresh"/>
