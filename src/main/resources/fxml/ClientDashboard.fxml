@@ -8,7 +8,7 @@
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.hotelio.controllers.ClientDashboardController">
 
-
+    <!-- Menu supérieur -->
     <top>
         <HBox spacing="10.0"
               style="-fx-background-color: #16a085;">
@@ -29,7 +29,7 @@
         </HBox>
     </top>
 
-
+    <!-- Menu latéral -->
     <left>
         <VBox spacing="10.0"
               minWidth="200"
@@ -37,6 +37,12 @@
             <padding>
                 <Insets top="20" right="20" bottom="20" left="20"/>
             </padding>
+
+            <Button fx:id="assistantButton"
+                    text="🤖 Assistant IA"
+                    onAction="#handleShowAssistant"
+                    maxWidth="Infinity"
+                    style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10; -fx-cursor: hand; -fx-alignment: center-left;"/>
 
             <Button fx:id="rechercheButton"
                     text="🔍 Rechercher"
@@ -58,7 +64,7 @@
         </VBox>
     </left>
 
-
+    <!-- Zone centrale -->
     <center>
         <StackPane fx:id="centerPane">
             <padding>

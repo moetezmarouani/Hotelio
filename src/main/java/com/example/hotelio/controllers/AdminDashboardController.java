@@ -13,6 +13,7 @@ public class AdminDashboardController {
 
     @FXML private Label welcomeLabel;
     @FXML private Button logoutButton;
+    @FXML private Button dashboardButton;
     @FXML private Button usersButton;
     @FXML private Button chambresButton;
     @FXML private Button reservationsButton;
@@ -27,9 +28,18 @@ public class AdminDashboardController {
         }
 
         // Ajouter des effets hover aux boutons de menu
+        addHoverEffect(dashboardButton);
         addHoverEffect(usersButton);
         addHoverEffect(chambresButton);
         addHoverEffect(reservationsButton);
+
+        // Charger le dashboard par défaut
+        loadView("/fxml/Dashboard.fxml");
+    }
+
+    @FXML
+    private void handleShowDashboard() {
+        loadView("/fxml/Dashboard.fxml");
     }
 
     @FXML

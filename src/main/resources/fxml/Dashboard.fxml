@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.hotelio.controllers.DashboardController"
+            fitToWidth="true"
+            style="-fx-background-color: #f5f5f5;">
+
+    <VBox spacing="20">
+        <padding>
+            <Insets top="20" right="20" bottom="20" left="20"/>
+        </padding>
+
+        <!-- Titre et bouton refresh -->
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <Label text="📊 Dashboard Statistiques"
+                   style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <Button fx:id="refreshButton"
+                    text="🔄 Actualiser"
+                    onAction="#handleRefresh"
+                    style="-fx-background-color: #3498db; -fx-text-fill: white;"/>
+        </HBox>
+
+        <!-- Cartes statistiques -->
+        <GridPane hgap="20" vgap="20">
+            <!-- Total Réservations -->
+            <VBox GridPane.columnIndex="0" GridPane.rowIndex="0"
+                  spacing="10" alignment="CENTER"
+                  style="-fx-background-color: #3498db; -fx-padding: 25; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 2);">
+                <Label text="📅" style="-fx-font-size: 36px;"/>
+                <Label fx:id="totalReservationsLabel"
+                       text="0"
+                       style="-fx-font-size: 42px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                <Label text="Réservations totales"
+                       style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px;"/>
+            </VBox>
+
+            <!-- Revenus -->
+            <VBox GridPane.columnIndex="1" GridPane.rowIndex="0"
+                  spacing="10" alignment="CENTER"
+                  style="-fx-background-color: #27ae60; -fx-padding: 25; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 2);">
+                <Label text="💰" style="-fx-font-size: 36px;"/>
+                <Label fx:id="revenusLabel"
+                       text="0 DT"
+                       style="-fx-font-size: 42px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                <Label text="Revenus totaux"
+                       style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px;"/>
+            </VBox>
+
+            <!-- Taux occupation -->
+            <VBox GridPane.columnIndex="2" GridPane.rowIndex="0"
+                  spacing="10" alignment="CENTER"
+                  style="-fx-background-color: #f39c12; -fx-padding: 25; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 2);">
+                <Label text="📈" style="-fx-font-size: 36px;"/>
+                <Label fx:id="tauxOccupationLabel"
+                       text="0%"
+                       style="-fx-font-size: 42px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                <Label text="Taux d'occupation"
+                       style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px;"/>
+            </VBox>
+
+            <!-- Clients actifs -->
+            <VBox GridPane.columnIndex="3" GridPane.rowIndex="0"
+                  spacing="10" alignment="CENTER"
+                  style="-fx-background-color: #9b59b6; -fx-padding: 25; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 2);">
+                <Label text="👥" style="-fx-font-size: 36px;"/>
+                <Label fx:id="clientsActifsLabel"
+                       text="0"
+                       style="-fx-font-size: 42px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                <Label text="Clients actifs"
+                       style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px;"/>
+            </VBox>
+        </GridPane>
+
+        <!-- Graphiques -->
+        <HBox spacing="20" VBox.vgrow="ALWAYS">
+            <!-- Graphique camembert statuts -->
+            <VBox spacing="10" HBox.hgrow="ALWAYS"
+                  style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10;">
+                <Label text="Répartition des réservations par statut"
+                       style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+                <PieChart fx:id="statutsPieChart"
+                          legendVisible="true"
+                          prefHeight="300"/>
+            </VBox>
+
+            <!-- Graphique types de chambres -->
+            <VBox spacing="10" HBox.hgrow="ALWAYS"
+                  style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10;">
+                <Label text="Chambres les plus réservées"
+                       style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+                <PieChart fx:id="chambresTypesPieChart"
+                          legendVisible="true"
+                          prefHeight="300"/>
+            </VBox>
+        </HBox>
+
+        <!-- Graphique en barres revenus -->
+        <VBox spacing="10"
+              style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10;">
+            <Label text="Revenus par mois"
+                   style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+            <BarChart fx:id="revenusBarChart"
+                      prefHeight="300">
+                <xAxis>
+                    <CategoryAxis label="Mois" side="BOTTOM"/>
+                </xAxis>
+                <yAxis>
+                    <NumberAxis label="Revenus (DT)" side="LEFT"/>
+                </yAxis>
+            </BarChart>
+        </VBox>
+
+        <!-- Top clients -->
+        <VBox spacing="10"
+              style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10;">
+            <Label text="🏆 Top 5 Clients"
+                   style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+            <Separator/>
+            <TableView fx:id="topClientsTable"
+                       prefHeight="200">
+                <columns>
+                    <TableColumn text="Rang" prefWidth="60"/>
+                    <TableColumn text="Client" prefWidth="200"/>
+                    <TableColumn text="Réservations" prefWidth="120"/>
+                    <TableColumn text="Dépenses totales" prefWidth="150"/>
+                    <TableColumn text="Niveau fidélité" prefWidth="150"/>
+                </columns>
+            </TableView>
+        </VBox>
+
+    </VBox>
+
+</ScrollPane>

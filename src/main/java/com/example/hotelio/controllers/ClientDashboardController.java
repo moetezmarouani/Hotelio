@@ -10,6 +10,7 @@ public class ClientDashboardController {
 
     @FXML private Label welcomeLabel;
     @FXML private Button logoutButton;
+    @FXML private Button assistantButton;
     @FXML private Button rechercheButton;
     @FXML private Button reservationsButton;
     @FXML private Button profilButton;
@@ -24,9 +25,15 @@ public class ClientDashboardController {
         }
 
         // Ajouter des effets hover aux boutons de menu
+        addHoverEffect(assistantButton);
         addHoverEffect(rechercheButton);
         addHoverEffect(reservationsButton);
         addHoverEffect(profilButton);
+    }
+
+    @FXML
+    private void handleShowAssistant() {
+        loadView("/fxml/AssistantIA.fxml");
     }
 
     @FXML
